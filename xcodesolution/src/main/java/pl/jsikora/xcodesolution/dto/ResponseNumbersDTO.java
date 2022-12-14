@@ -4,6 +4,12 @@ import java.util.List;
 
 public class ResponseNumbersDTO {
     private List<Integer> numbers;
+    public ResponseNumbersDTO(List<Integer> numbers) {
+        this.numbers = numbers;
+    }
+
+    public ResponseNumbersDTO() {
+    }
 
     public List<Integer> getNumbers() {
         return numbers;
@@ -12,7 +18,5 @@ public class ResponseNumbersDTO {
         this.numbers = numbers;
     }
 
-    public ResponseNumbersDTO(List<Integer> numbers) {
-        this.numbers = numbers;
-    }
+
 }

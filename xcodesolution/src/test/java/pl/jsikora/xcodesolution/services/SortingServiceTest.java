@@ -17,8 +17,7 @@ import pl.jsikora.xcodesolution.exceptions.BadOrderException;
 @ExtendWith(MockitoExtension.class)
 public class SortingServiceTest {
     
-    private SortingService sortingService = new SortingService();
-
+    private final SortingService sortingService = new SortingService();
     private static final List<Integer> testList = new ArrayList<Integer>(Arrays.asList(1,2,3,0));
     private static final RequestNumbersDTO testRequest = new RequestNumbersDTO(testList);
 

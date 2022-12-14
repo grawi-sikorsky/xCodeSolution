@@ -35,12 +35,12 @@ public class XcodeController {
     }
 
     @PostMapping(value = "numbers/sort-command")
-    public ResponseEntity<ResponseNumbersDTO> numbers(@RequestBody RequestNumbersDTO requesNumbers){
-        return ResponseEntity.status(HttpStatus.OK).body(sortingService.sortNumbers(requesNumbers));
+    public ResponseEntity<ResponseNumbersDTO> numbers(@RequestBody RequestNumbersDTO requestNumbers){
+        return ResponseEntity.status(HttpStatus.OK).body(sortingService.sortNumbers(requestNumbers));
     }
 
     @PostMapping(value = "currencies/get-current-currency-value-command")
     public ResponseEntity<ResponseExchangeRateDTO> currency(@RequestBody RequestCurrencyDTO requestedCurrency){
-        return ResponseEntity.status(HttpStatus.OK).body(exchangeRateService.getExchangeRateFromAPI2(requestedCurrency));
+        return ResponseEntity.status(HttpStatus.OK).body(exchangeRateService.getExchangeRateFromAPI(requestedCurrency));
     }
 }

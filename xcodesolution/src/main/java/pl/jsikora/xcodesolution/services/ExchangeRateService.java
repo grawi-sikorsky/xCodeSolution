@@ -10,26 +10,8 @@ import pl.jsikora.xcodesolution.models.NBPCurrencyModel;
 
 @Service
 public class ExchangeRateService {
-    
+
     public ResponseExchangeRateDTO getExchangeRateFromAPI(RequestCurrencyDTO requestedCurrency){
-        // "https://api.nbp.pl/api/exchangerates/rates/a/usd?format=json"
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("https://api.nbp.pl/api/exchangerates/rates/a/")
-                        .append(requestedCurrency.getCurrency())
-                        .append("?format=json");
-
-        final String uri = stringBuilder.toString();
-
-        RestTemplate restTemplate = new RestTemplate();
-        String curJson = restTemplate.getForObject(uri, String.class);
-
-        String temp = curJson.substring(curJson.lastIndexOf("mid") + 5, curJson.indexOf("}]}"));
-
-        return new ResponseExchangeRateDTO(Double.valueOf(temp));
-    }
-
-    public ResponseExchangeRateDTO getExchangeRateFromAPI2(RequestCurrencyDTO requestedCurrency){
         StringBuilder stringBuilder = new StringBuilder();
         RestTemplate restTemplate = new RestTemplate();
         stringBuilder.append("https://api.nbp.pl/api/exchangerates/rates/a/")
@@ -38,7 +20,7 @@ public class ExchangeRateService {
 
         final String uri = stringBuilder.toString();
 
-        NBPCurrencyModel exRate = new NBPCurrencyModel();
+        NBPCurrencyModel exRate;
 
         try{
             exRate = restTemplate.getForObject(uri, NBPCurrencyModel.class);
