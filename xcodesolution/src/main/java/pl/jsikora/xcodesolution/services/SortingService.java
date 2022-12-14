@@ -16,8 +16,8 @@ public class SortingService {
         List<Integer> tempNumbers = requestNumbers.getNumbers();
 
         if (tempNumbers != null) {
-            if (requestNumbers.getOrder().equals("ASC")) tempNumbers.sort(Comparator.naturalOrder());
-            else if (requestNumbers.getOrder().equals("DESC")) tempNumbers.sort(Comparator.reverseOrder());
+            if ("ASC".equals(requestNumbers.getOrder())) tempNumbers.sort(Comparator.naturalOrder());
+            else if ("DESC".equals(requestNumbers.getOrder())) tempNumbers.sort(Comparator.reverseOrder());
             else throw new BadOrderException("Bad order type, only 'ASC' or 'DESC' allowed.");
         }
         return new ResponseNumbersDTO(tempNumbers);

@@ -1,7 +1,7 @@
 package pl.jsikora.xcodesolution.dto;
 
 public class ResponseExchangeRateDTO {
-    Double value;
+    private Double value;
 
     public ResponseExchangeRateDTO(Double value) {
         this.value = value;

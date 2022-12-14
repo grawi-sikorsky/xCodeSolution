@@ -39,35 +39,12 @@ public class XcodeControllerTests {
     private MockMvc mockMvc;
 
     @BeforeAll
-    public void setup() {
+    void setup() {
         this.mockMvc = webAppContextSetup(webApplicationContext).build();
     }
 
-    public String prepareNumbersRequest() throws JsonProcessingException {
-        RequestNumbersDTO request = new RequestNumbersDTO();
-        request.setOrder("ASC");
-        request.setNumbers(Arrays.asList(1, 2, 3, 0));
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
-        ObjectWriter objectWriter = objectMapper.writer().withDefaultPrettyPrinter();
-
-        return objectWriter.writeValueAsString(request);
-    }
-
-    public String prepareCurrencyRequest() throws JsonProcessingException {
-        RequestCurrencyDTO request = new RequestCurrencyDTO();
-        request.setCurrency("CHF");
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
-        ObjectWriter objectWriter = objectMapper.writer().withDefaultPrettyPrinter();
-
-        return objectWriter.writeValueAsString(request);
-    }
-
     @Test
-    public void pingpong_should_pong() throws Exception {
+    void pingpong_should_pong() throws Exception {
         MvcResult mvcResult = this.mockMvc.perform(get("/status/ping"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print())
@@ -78,7 +55,7 @@ public class XcodeControllerTests {
     }
 
     @Test
-    public void numbers_should_return_ok() throws Exception {
+    void numbers_should_return_ok() throws Exception {
         MvcResult mvcResult = this.mockMvc.perform(post("/numbers/sort-command")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(prepareNumbersRequest()))
@@ -93,7 +70,7 @@ public class XcodeControllerTests {
     }
 
     @Test
-    public void currency_should_return_ok() throws Exception {
+    void currency_should_return_ok() throws Exception {
         MvcResult mvcResult = this.mockMvc.perform(post("/currencies/get-current-currency-value-command")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(prepareCurrencyRequest()))
@@ -107,4 +84,26 @@ public class XcodeControllerTests {
         //assertEquals(Arrays.asList(0,1,2,3), response.getNumbers());
     }
 
+    private String prepareNumbersRequest() throws JsonProcessingException {
+        RequestNumbersDTO request = new RequestNumbersDTO();
+        request.setOrder("ASC");
+        request.setNumbers(Arrays.asList(1, 2, 3, 0));
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter objectWriter = objectMapper.writer().withDefaultPrettyPrinter();
+
+        return objectWriter.writeValueAsString(request);
+    }
+
+    private String prepareCurrencyRequest() throws JsonProcessingException {
+        RequestCurrencyDTO request = new RequestCurrencyDTO();
+        request.setCurrency("CHF");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter objectWriter = objectMapper.writer().withDefaultPrettyPrinter();
+
+        return objectWriter.writeValueAsString(request);
+    }
 }

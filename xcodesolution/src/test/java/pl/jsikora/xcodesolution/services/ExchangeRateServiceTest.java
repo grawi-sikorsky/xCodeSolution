@@ -19,7 +19,6 @@ public class ExchangeRateServiceTest {
 
         responseExchangeRateDTO = exchangeRateService.getExchangeRateFromAPI(requestedCurrency);
 
-        //assertEquals(Double.class, responseExchangeRateDTO.getValue().getClass());
         assertNotNull(responseExchangeRateDTO.getValue());
     }
 

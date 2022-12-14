@@ -7,26 +7,23 @@ import pl.jsikora.xcodesolution.dto.ResponseExchangeRateDTO;
 import pl.jsikora.xcodesolution.exceptions.BadExchangeResponseException;
 import pl.jsikora.xcodesolution.models.NBPCurrencyModel;
 
+import javax.swing.text.html.Option;
+import java.util.Map;
+import java.util.Optional;
+
 @Service
 public class ExchangeRateService {
+    private final RestTemplate restTemplate = new RestTemplate();
 
     public ResponseExchangeRateDTO getExchangeRateFromAPI(RequestCurrencyDTO requestedCurrency) {
-        StringBuilder stringBuilder = new StringBuilder();
-        RestTemplate restTemplate = new RestTemplate();
-        stringBuilder.append("https://api.nbp.pl/api/exchangerates/rates/a/")
-                .append(requestedCurrency.getCurrency())
-                .append("?format=json");
-
-        final String uri = stringBuilder.toString();
-
-        NBPCurrencyModel exRate;
-
         try {
-            exRate = restTemplate.getForObject(uri, NBPCurrencyModel.class);
-        } catch (RuntimeException ex) {
+            NBPCurrencyModel exRate = restTemplate.getForObject(
+                    "https://api.nbp.pl/api/exchangerates/rates/a/{currency}?format=json",
+                    NBPCurrencyModel.class,
+                    Map.of("currency", requestedCurrency.getCurrency()));
+            return new ResponseExchangeRateDTO(Optional.ofNullable(exRate).orElseThrow().getRates().get(0).getMid());
+        } catch (Exception ex) {
             throw new BadExchangeResponseException("No such currency, or bad request to NBP currency API.");
         }
-
-        return new ResponseExchangeRateDTO(exRate.rates.get(0).mid);
     }
 }
