@@ -7,6 +7,16 @@ public class RequestNumbersDTO {
     private List<Integer> numbers;
     private String order;
 
+    
+    public RequestNumbersDTO(List<Integer> numbers) {
+        this.numbers = numbers;
+    }
+    
+
+    public RequestNumbersDTO() {
+    }
+
+
     public List<Integer> getNumbers() {
         return numbers;
     }
