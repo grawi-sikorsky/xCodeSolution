@@ -77,11 +77,6 @@ public class XcodeControllerTests {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
-
-        //String result = mvcResult.getResponse().getContentAsString();
-        //ResponseNumbersDTO response = new ObjectMapper().readValue(result, ResponseNumbersDTO.class);
-
-        //assertEquals(Arrays.asList(0,1,2,3), response.getNumbers());
     }
 
     private String prepareNumbersRequest() throws JsonProcessingException {
