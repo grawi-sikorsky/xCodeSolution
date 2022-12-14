@@ -1,6 +1,6 @@
 package pl.jsikora.xcodesolution.dto;
 
-public class RequestCurrencyDTO{
+public class RequestCurrencyDTO {
     String currency;
 
     public String getCurrency() {
@@ -10,5 +10,5 @@ public class RequestCurrencyDTO{
     public void setCurrency(String currency) {
         this.currency = currency;
     }
-    
+
 }

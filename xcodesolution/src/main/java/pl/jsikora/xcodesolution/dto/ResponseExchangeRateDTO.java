@@ -17,5 +17,5 @@ public class ResponseExchangeRateDTO {
     public void setValue(Double value) {
         this.value = value;
     }
-    
+
 }

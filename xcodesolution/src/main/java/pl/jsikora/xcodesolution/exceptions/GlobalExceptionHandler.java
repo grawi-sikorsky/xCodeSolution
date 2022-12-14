@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    
+
     @ExceptionHandler(BadOrderException.class)
-    public ResponseEntity<String> handleBadOrder(BadOrderException ex){
+    public ResponseEntity<String> handleBadOrder(BadOrderException ex) {
         return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 

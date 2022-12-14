@@ -14,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.context.WebApplicationContext;
@@ -24,9 +23,10 @@ import pl.jsikora.xcodesolution.dto.ResponseNumbersDTO;
 
 import java.util.Arrays;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
@@ -37,6 +37,7 @@ public class XcodeControllerTests {
     @Autowired
     private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
+
     @BeforeAll
     public void setup() {
         this.mockMvc = webAppContextSetup(webApplicationContext).build();
@@ -45,7 +46,7 @@ public class XcodeControllerTests {
     public String prepareNumbersRequest() throws JsonProcessingException {
         RequestNumbersDTO request = new RequestNumbersDTO();
         request.setOrder("ASC");
-        request.setNumbers(Arrays.asList(1,2,3,0));
+        request.setNumbers(Arrays.asList(1, 2, 3, 0));
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -80,7 +81,7 @@ public class XcodeControllerTests {
     public void numbers_should_return_ok() throws Exception {
         MvcResult mvcResult = this.mockMvc.perform(post("/numbers/sort-command")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content( prepareNumbersRequest() ))
+                        .content(prepareNumbersRequest()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
@@ -88,14 +89,14 @@ public class XcodeControllerTests {
         String result = mvcResult.getResponse().getContentAsString();
         ResponseNumbersDTO response = new ObjectMapper().readValue(result, ResponseNumbersDTO.class);
 
-        assertEquals(Arrays.asList(0,1,2,3), response.getNumbers());
+        assertEquals(Arrays.asList(0, 1, 2, 3), response.getNumbers());
     }
 
     @Test
     public void currency_should_return_ok() throws Exception {
         MvcResult mvcResult = this.mockMvc.perform(post("/currencies/get-current-currency-value-command")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content( prepareCurrencyRequest() ))
+                        .content(prepareCurrencyRequest()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
